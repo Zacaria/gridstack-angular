@@ -23,14 +23,14 @@
     };
 
     this.removeItem = function(element) {
-      if (gridstack) {
+      if(gridstack) {
         return gridstack.removeWidget(element, false);
       }
       return null;
     };
 
     this.addItem = function(element) {
-      if (gridstack) {
+      if(gridstack) {
         gridstack.makeWidget(element);
         return element;
       }
