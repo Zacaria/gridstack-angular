@@ -30,11 +30,12 @@
             <p>{{widgets}}</p>
             <div>
                 <a class="btn btn-primary" ng-click="addWidget()" href="#">Add Widget</a>
+                <a class="btn" ng-class="disabled ? 'btn-success' : 'btn-danger'" ng-click="disabled ? enable() : disable()" href="#">{{disabled ? "enable" : "disable"}}</a>
             </div>
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <div gridstack class="grid-stack grid1" options="options" on-change="onChange(event,items)" on-drag-start="onDragStart(event,ui)" on-drag-stop="onDragStop(event,ui)" on-resize-start="onResizeStart(event,ui)" on-resize-stop="onResizeStop(event,ui)">
+                    <div gridstack gridstack-handler="gridstacker" class="grid-stack grid1" disabled="disabled" options="options" on-change="onChange(event,items)" on-drag-start="onDragStart(event,ui)" on-drag-stop="onDragStop(event,ui)" on-resize-start="onResizeStart(event,ui)" on-resize-stop="onResizeStop(event,ui)">
                         <div
                             gridstack-item
                             ng-repeat="w in widgets"
@@ -69,7 +70,8 @@
         <script src="../src/gridstackitem.directive.js"></script>
 
         <script type="text/javascript">
-            var app = angular.module('GridStack', ['gridstack-angular']).controller('DemoCtrl', function($scope, $log) {
+            var app = angular.module('GridStack', ['gridstack-angular'])
+            .controller('DemoCtrl', function($scope, $log) {
 
                 $scope.widgets = [
                     {
@@ -92,6 +94,10 @@
                         minHeight: 1
                     }
                 ];
+
+                $scope.disabled = false;
+
+                $scope.gridstacker = null;
 
                 $scope.options = {
                     cell_height: 200,
@@ -143,6 +149,18 @@
 
                 $scope.onItemRemoved = function(item) {
                     $log.log("onItemRemoved item: " + item);
+                };
+
+                $scope.enable = function(){
+                    $scope.gridstacker.enable();
+                    $scope.disabled = false;
+                    console.log("enabled");
+                };
+
+                $scope.disable = function(){
+                    $scope.gridstacker.disable();
+                    $scope.disabled = true;
+                    console.log("diasbled");
                 };
 
             });
