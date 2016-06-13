@@ -22,7 +22,7 @@
 
         var gridstack = controller.init(element, scope.options);
         scope.gridstackHandler = gridstack;
-        
+
         element.on('change', function (e, items) {
           $timeout(function() {
             scope.$apply();
